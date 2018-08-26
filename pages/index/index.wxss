@@ -16,6 +16,26 @@
   color: #aaa;
 }
 
-.usermotto {
-  margin-top: 200px;
+.content{ 
+ display: flex; 
+ justify-content: space-around; 
+ align-items: center; 
+ margin-top: 200rpx; 
+} 
+
+.iptbox{ 
+ width: 80rpx; 
+ height: 80rpx; 
+ border: 1rpx solid #ddd; 
+ border-radius: 0rpx; 
+ display: flex; 
+ justify-content: center; 
+ align-items: center; 
+ text-align: center;
+ margin: 10rpx;
+}
+
+.ipt{ 
+ width: 0; 
+ height: 0; 
 }
