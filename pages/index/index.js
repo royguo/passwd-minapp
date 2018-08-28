@@ -8,17 +8,10 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
 
-    Length: 4,        //输入框个数
-    isFocus: true,    //聚焦
-    Value: "",        //输入的内容
-    ispassword: false, //是否密文显示 true为密文， false为明文。
+    isFocus: true,
+    passwd: ""
   },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
+
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({
@@ -55,21 +48,36 @@ Page({
       hasUserInfo: true
     })
   },
-  Focus(e) {
+  passwdInput(e) {
     var that = this;
     console.log(e.detail.value);
     var inputValue = e.detail.value;
     that.setData({
-      Value: inputValue,
+      passwd: inputValue,
     })
+    if(inputValue.length == 4) {
+      if(inputValue == '1234') {
+        // Save password when its the first time.
+
+        // Check password if it has already been saved before.
+
+        // enter main page
+        wx.redirectTo({
+          url: '../list'
+        })
+      } else {
+        wx.showToast({
+          title: '密码错误，请重试',
+          icon: 'none',
+          duration: 1500
+        })
+      }
+    }
   },
   Tap() {
     var that = this;
     that.setData({
       isFocus: true,
     })
-  },
-  formSubmit(e) {
-    console.log(e.detail.value.password);
-  },
+  }
 })
