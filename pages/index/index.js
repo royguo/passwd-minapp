@@ -63,7 +63,7 @@ Page({
 
         // enter main page
         wx.redirectTo({
-          url: '../list'
+          url: '../list/list'
         })
       } else {
         wx.showToast({

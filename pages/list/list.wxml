@@ -1,2 +1,43 @@
-<!--pages/list/list.wxml-->
-<text>pages/list/list.wxml</text>
+<view class='ctn'>
+
+<view class='item form'>
+  <form bindsubmit='saveRecord'>
+    <view class='line'>
+      <view class='left'>应用</view>
+      <view class='right'>
+        <input placeholder='application' name="app" value='{{record.app}}'/>
+      </view>
+    </view>
+
+    <view class='line'>
+      <view class='left'>账号</view>
+      <view class='right'>
+        <input placeholder='account' name="key" value='{{record.key}}'/>
+      </view>
+    </view>
+
+    <view class='line'>
+      <view class='left'>密码</view>
+      <view class='right'>
+        <input placeholder='password' name="value" value='{{record.value}}'/>
+      </view>
+    </view>
+    <button form-type='submit' class='save-btn'>保存</button>
+  </form>
+</view>
+
+<view wx:for="{{list}}" class='item list'>
+  <view class='line'>
+    <view class='left'>应用</view>
+    <view class='right'><text>{{item.app}}</text></view>
+  </view>
+  <view class='line'>
+    <view class='left'>账号</view>
+    <view class='right'><text>{{item.key}}</text></view>
+  </view>
+  <view class='line'>
+    <view class='left'>密码</view>
+    <view class='right'><text>{{item.value}}</text></view>
+  </view>
+</view>
+</view>
