@@ -50,7 +50,7 @@
 
 .ops {
   text-align: right;
-  padding: 20rpx 20rpx 10rpx 0;
+  padding: 10rpx 20rpx 0rpx 0;
 }
 
 .ops button {
