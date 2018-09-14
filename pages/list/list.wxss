@@ -19,6 +19,7 @@
   -webkit-align-items: center;
   align-items: center;
   border-bottom: 1rpx solid #e5e5e5;
+  height: 60rpx;
 }
 
 .item .line .left {
@@ -61,19 +62,42 @@
   margin: 0 10rpx;
 }
 
-.save-btn  {
-  width: 200rpx;
-  background-color: #1AAD19;
-  color: #FFF;
+.save-btn, .cancel-btn  {
+  width: 150rpx;
+  /* background-color: #1AAD19; */
+  /* color: #FFF; */
   height: 60rpx;
   line-height: 60rpx;
-  margin: 20rpx auto;
-  font-size: 12pt;
+  margin: 20rpx 10rpx;
+  font-size: 10pt;
+  display: inline-block;
+}
+
+.cancel-btn {
+  /* background-color: #e64340; */
+}
+
+.top-btns{
+  margin: 0 40rpx 20rpx 40rpx;
+}
+
+.top-btns button {
+  width: 130rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  margin: 0 10rpx;
+  font-size: 10pt;
+  display: inline-block;
 }
 
 .list {
   margin-bottom: 50rpx;
   border:1rpx solid #DDD;
+}
+
+.list .line {
+  height: 50rpx;
+  background-color: #FFF;
 }
 
 .form .line {

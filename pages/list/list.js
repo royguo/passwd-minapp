@@ -3,7 +3,9 @@ Page({
     list: [
       { id: 1, app: 'app1', key: 'account1', value: 'password1'}
     ],
-    record: {id: 0, app: '', key: '', value: '' }
+    record: {id: 0, app: '', key: '', value: '' },
+    focus: { key: false, value: false},
+    hideForm: true
   },
 
   onLoad: function (options) {
@@ -33,6 +35,7 @@ Page({
   onShareAppMessage: function () {},
 
   saveRecord: function(e) {
+    console.log(e)
     var that = this
     var newRecord = e.detail.value
     if(newRecord.app == '') {
@@ -105,6 +108,53 @@ Page({
     })
   },
 
+  focusKey: function (event){
+    this.setData({
+      focus: {
+        key: true,
+        value: false
+      }
+    })
+  },
+
+  focusValue: function (event) {
+    this.setData({
+      focus: {
+        key: false,
+        value: true
+      }
+    })
+  },
+
+  cancel: function(){
+    this.setData({
+      record: { id: 0, app: '', key: '', value: '' },
+      hideForm : true
+    })
+  },
+
+  addNew: function() {
+    this.setData({
+      hideForm: false
+    })
+  },
+
+  backup: function(){
+
+  },
+
+  backup: function(){
+
+  },
+
+  info: function() {
+    wx.showModal({
+      title: '安全说明',
+      content: '本程序完全开源，所有数据仅在本地存储保障安全，请定期导出数据以防数据丢失。源代码地址：github.com/royguo/passwd-minapp',
+      showCancel: false,
+      confirmText: '我明白啦'
+    })
+  },
 
   // ~~~~~~~~~~~ util methods ~~~~~~~~~~
   removeRecord: function (items, id) {

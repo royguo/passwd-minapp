@@ -1,29 +1,38 @@
 <view class='ctn'>
 
-<view class='item form'>
+<view class='top-btns'>
+  <button bindtap='addNew'>添加</button>
+  <button disabled='true' bindtap='backup'>导出</button>
+  <button disabled='true' bindtap='restore'>导入</button>
+  <button bindtap='info'>说明</button>
+</view>
+<view wx:if="{{!hideForm}}" class='item form'>
   <form bindsubmit='saveRecord'>
   <input style='display: none' name="id" value='{{record.id}}'/>
     <view class='line'>
       <view class='left'>应用</view>
       <view class='right'>
-        <input placeholder='application' name="app" value='{{record.app}}'/>
+        <input confirm-type='next' bindconfirm='focusKey' name="app" value='{{record.app}}'/>
       </view>
     </view>
 
     <view class='line'>
       <view class='left'>账号</view>
       <view class='right'>
-        <input placeholder='account' name="key" value='{{record.key}}'/>
+        <input focus='{{focus.key}}' confirm-type='next' bindconfirm='focusValue' name="key" value='{{record.key}}'/>
       </view>
     </view>
 
     <view class='line'>
       <view class='left'>密码</view>
       <view class='right'>
-        <input placeholder='password' name="value" value='{{record.value}}'/>
+        <input focus='{{focus.value}}' confirm-type='done' name="value" value='{{record.value}}'/>
       </view>
     </view>
-    <button form-type='submit' class='save-btn'>保存</button>
+    <view style='text-align: center'>
+      <button class='cancel-btn' bindtap='cancel'>取消</button>
+      <button form-type='submit' class='save-btn'>保存</button>
+    </view>
   </form>
 </view>
 
