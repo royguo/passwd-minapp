@@ -1,21 +1,11 @@
-// pages/list/list.js
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     list: [
-      { app: 'app1', key: 'account1', value: 'password1'},
-      { app: 'app2', key: 'account2', value: 'password2' },
-      { app: 'app3', key: 'account3', value: 'password3' }
+      { id: 1, app: 'app1', key: 'account1', value: 'password1'}
     ],
-    record: { app: '', key: '', value: '' }
+    record: {id: 0, app: '', key: '', value: '' }
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
     var that = this
     list: wx.getStorage({
@@ -28,54 +18,19 @@ Page({
     })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
+  onReady: function () {},
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
+  onShow: function () {},
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
+  onHide: function () {},
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
+  onUnload: function () {},
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
+  onPullDownRefresh: function () {},
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
+  onReachBottom: function () {},
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  },
+  onShareAppMessage: function () {},
 
   saveRecord: function(e) {
     var that = this
@@ -98,15 +53,107 @@ Page({
       return;
     }
 
-    var newList = that.data.list
-    newList.push(newRecord)
+    // 生成新 ID
+    if(newRecord.id == 0) {
+      var newId = getLastId(that.data.list)
+      newRecord.id = newId;
+    }
+
+    const newList = updateOrAddNewRecord(that.data.list, newRecord)
     that.setData({
-      record : {app: '', key: '', value: ''},
+      record : {id: 0, app: '', key: '', value: ''},
       list: newList
     })
     wx.setStorage({
       key: 'cachedList',
-      data: newList,
+      data: newList
     })
-  }
+  },
+
+  remove: function(e) {
+    var that = this
+
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除吗？',
+      success: function (sm) {
+        if (sm.confirm) {
+          // 用户点击了确定 可以调用删除方法了
+          const id = e.target.dataset.id
+          const newList = that.removeRecord(that.data.list, id)
+          that.setData({
+            list: newList
+          })
+          wx.setStorage({
+            key: 'cachedList',
+            data: newList
+          })
+        } else if (sm.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+
+  edit: function(e) {
+    const id = e.target.dataset.id
+    const newRecord = getRecordById(this.data.list, id)
+    // console.log(id)
+    // console.log(newRecord)
+    this.setData({
+      record: newRecord
+    })
+  },
+
+
+  // ~~~~~~~~~~~ util methods ~~~~~~~~~~
+  removeRecord: function (items, id) {
+    var newItems = [];
+    for(var i = 0; i<items.length; i++) {
+      if (items[i].id != id) {
+        newItems.push(items[i])
+      }
+    }
+    return newItems;
+    }
 })
+
+function getLastId(items) {
+  var id = 0;
+  // console.log(items)
+  for(var i =0; i < items.length; i++) {
+    if(id < items[i].id) {
+      id = items[i].id;
+    }
+  }
+  return id + 1;
+}
+
+function updateOrAddNewRecord(items, newRecord) {
+  var newItems = [];
+  var updated = false;
+  for(var i = 0; i < items.length; i++) {
+    if(items[i].id != newRecord.id) {
+      newItems.push(items[i])
+    }else{
+      newItems.push(newRecord)
+      updated = true
+    }
+  }
+  if(!updated) {
+    newItems.push(newRecord)
+  }
+  return newItems;
+}
+
+function getRecordById(items, id) {
+  // console.log(items)
+  for (var i = 0; i < items.length; i++) {
+    // console.log(items[i].id)
+    // console.log(id)
+    if (items[i].id == id) {
+      return items[i]
+    } 
+  }
+  return {};
+}

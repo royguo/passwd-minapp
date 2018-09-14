@@ -2,6 +2,7 @@
 
 <view class='item form'>
   <form bindsubmit='saveRecord'>
+  <input style='display: none' name="id" value='{{record.id}}'/>
     <view class='line'>
       <view class='left'>应用</view>
       <view class='right'>
@@ -29,15 +30,19 @@
 <view wx:for="{{list}}" class='item list'>
   <view class='line'>
     <view class='left'>应用</view>
-    <view class='right'><text>{{item.app}}</text></view>
+    <view class='right'><text selectable='true'>{{item.app}}</text></view>
   </view>
   <view class='line'>
     <view class='left'>账号</view>
-    <view class='right'><text>{{item.key}}</text></view>
+    <view class='right'><text selectable='true'>{{item.key}}</text></view>
   </view>
   <view class='line'>
     <view class='left'>密码</view>
-    <view class='right'><text>{{item.value}}</text></view>
+    <view class='right'><text selectable='true'>{{item.value}}</text></view>
+  </view>
+  <view class='ops'>
+      <button bindtap='remove' data-id='{{item.id}}'>删除</button>
+      <button bindtap='edit' data-id='{{item.id}}'>编辑</button>
   </view>
 </view>
 </view>
