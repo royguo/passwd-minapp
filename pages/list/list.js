@@ -104,7 +104,8 @@ Page({
     // console.log(id)
     // console.log(newRecord)
     this.setData({
-      record: newRecord
+      record: newRecord,
+      hideForm: false
     })
   },
 
@@ -152,7 +153,7 @@ Page({
       title: '安全说明',
       content: '本程序完全开源，所有数据仅在本地存储保障安全，请定期导出数据以防数据丢失。源代码地址：github.com/royguo/passwd-minapp',
       showCancel: false,
-      confirmText: '我明白啦'
+      confirmText: '我明白了'
     })
   },
 
