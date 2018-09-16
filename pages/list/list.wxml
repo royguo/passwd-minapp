@@ -1,8 +1,13 @@
+<view class='qrcode-ctn' wx:if="{{!hideQRCode}}">
+  <canvas class='canvas' canvas-id='canvas' bindlongtap='save'></canvas>
+  <button bindtap='hideQRCode'>关闭</button>
+</view>
+
 <view class='ctn'>
 
 <view class='top-btns'>
   <button bindtap='addNew'>添加</button>
-  <button disabled='true' bindtap='backup'>导出</button>
+  <button disabled='true' bindtap='showQRCode'>导出</button>
   <button disabled='true' bindtap='restore'>导入</button>
   <button bindtap='info'>说明</button>
 </view>

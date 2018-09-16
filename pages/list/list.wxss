@@ -85,7 +85,7 @@
   width: 130rpx;
   height: 60rpx;
   line-height: 60rpx;
-  margin: 0 10rpx;
+  margin-right: 10rpx;
   font-size: 10pt;
   display: inline-block;
 }
@@ -102,4 +102,13 @@
 
 .form .line {
   background-color: #FFF;
+}
+
+.qrcode-ctn{
+}
+
+.canvas {
+  width: 300px;
+  height: 300px;
+  margin:20rpx auto;
 }

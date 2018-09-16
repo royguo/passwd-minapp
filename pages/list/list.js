@@ -1,3 +1,5 @@
+var QRCode = require('../../utils/weapp-qrcode.js')
+
 Page({
   data: {
     list: [
@@ -5,7 +7,8 @@ Page({
     ],
     record: {id: 0, app: '', key: '', value: '' },
     focus: { key: false, value: false},
-    hideForm: true
+    hideForm: true,
+    hideQRCode: true
   },
 
   onLoad: function (options) {
@@ -19,20 +22,6 @@ Page({
       },
     })
   },
-
-  onReady: function () {},
-
-  onShow: function () {},
-
-  onHide: function () {},
-
-  onUnload: function () {},
-
-  onPullDownRefresh: function () {},
-
-  onReachBottom: function () {},
-
-  onShareAppMessage: function () {},
 
   saveRecord: function(e) {
     console.log(e)
@@ -140,18 +129,39 @@ Page({
     })
   },
 
-  backup: function(){
+  showQRCode: function(){
+    const secret = JSON.stringify(this.data.list) 
+    console.log(secret)
+    //传入wxml中二维码canvas的canvas-id
+    var qrcode = new QRCode('canvas', {
+      // usingIn: this,
+      text: secret,
+      width: '300',
+      height: '300',
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H,
+    });
 
+    this.setData({
+      hideQRCode: false
+    })
   },
 
-  backup: function(){
+  hideQRCode: function() {
+    this.setData({
+      hideQRCode: true
+    })
+  },
+
+  importFromQRCode: function(){
 
   },
 
   info: function() {
     wx.showModal({
       title: '安全说明',
-      content: '本程序完全开源，所有数据仅在本地存储保障安全，请定期导出数据以防数据丢失。源代码地址：github.com/royguo/passwd-minapp',
+      content: '本程序完全开源，所有数据仅在本地存储并且不会上传到任何服务器，请定期导出数据以防数据丢失。源码：    github.com/royguo/passwd-minapp',
       showCancel: false,
       confirmText: '我明白了'
     })
