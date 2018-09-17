@@ -1,14 +1,28 @@
-<view class='qrcode-ctn' wx:if="{{!hideQRCode}}">
+<!-- <view class='qrcode-ctn' wx:if="{{!hideQRCode}}">
   <canvas class='canvas' canvas-id='canvas' bindlongtap='save'></canvas>
   <button bindtap='hideQRCode'>关闭</button>
-</view>
+</view> -->
+
+<!--show.wxml-->  
+
+<modal hidden="{{hideBackupModal}}" title="备份数据到云端" 
+       confirm-text="上传" cancel-text="取消"
+       bindcancel="cancelBackup" bindconfirm="confirmBackup">  
+    <input bindinput='passwdInput' type='text'placeholder="请输入备份文件密码" value='{{passwd}}'/>  
+</modal>
+
+<modal hidden="{{hideRestoreModal}}" title="从云端恢复数据" 
+       confirm-text="恢复" cancel-text="取消"
+       bindcancel="cancelRestore" bindconfirm="confirmRestore">  
+    <input bindinput='passwdInput' type='text'placeholder="请输入备份文件密码" value='{{passwd}}'/>  
+</modal>
 
 <view class='ctn'>
 
 <view class='top-btns'>
   <button bindtap='addNew'>添加</button>
-  <button disabled='true' bindtap='showQRCode'>导出</button>
-  <button disabled='true' bindtap='restore'>导入</button>
+  <button bindtap='backup'>备份</button>
+  <button bindtap='restore'>恢复</button>
   <button bindtap='info'>说明</button>
 </view>
 <view wx:if="{{!hideForm}}" class='item form'>
@@ -55,8 +69,8 @@
     <view class='right'><text selectable='true'>{{item.value}}</text></view>
   </view>
   <view class='ops'>
-      <button bindtap='remove' data-id='{{item.id}}'>删除</button>
       <button bindtap='edit' data-id='{{item.id}}'>编辑</button>
+      <button bindtap='remove' data-id='{{item.id}}'>删除</button>
   </view>
 </view>
 </view>
