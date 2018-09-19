@@ -202,7 +202,7 @@ Page({
     if (that.data.passwd == '') {
       wx.showToast({
         title: '请输入密码',
-        image: '../../images/cross.png'
+        icon: 'none'
       })
       return
     }
@@ -267,7 +267,7 @@ Page({
     if(that.data.passwd=='') {
       wx.showToast({
         title: '请输入密码',
-        image: '../../images/cross.png'
+        icon: 'none'
       })
       return
     }
@@ -284,6 +284,7 @@ Page({
                 if(!restored){
                   wx.showToast({
                     title: '密码错误，请重试!',
+                    icon: 'none'
                   })
                 }else{
                   // console.log(JSON.parse(restored))
@@ -296,7 +297,8 @@ Page({
                 }
               } else {
                 wx.showToast({
-                  title: '服务器端暂无备份!'
+                  title: '服务器端暂无备份!',
+                  icon: 'none'
                 })
               }
               that.setData({

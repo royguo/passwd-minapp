@@ -1,5 +1,3 @@
-//index.js
-//获取应用实例
 const app = getApp()
 
 Page({
@@ -9,7 +7,11 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
 
     isFocus: true,
-    passwd: ""
+    // MD5 加密后得临时设备密码
+    oldPasswd: "",
+    // 用户输入得解锁码
+    passwd: "",
+    firstUse: true
   },
 
   onLoad: function () {
@@ -39,6 +41,16 @@ Page({
         }
       })
     }
+    // 从本地缓存获得之前设置的解锁码
+    const oldPasswd = wx.getStorageSync('oldPasswd')
+    if (oldPasswd == '') {
+      this.setData({firstUse: true})
+    }else{
+      this.setData({
+        oldPasswd: oldPasswd,
+        firstUse: false
+      })
+    }
   },
   getUserInfo: function(e) {
     console.log(e)
@@ -48,6 +60,8 @@ Page({
       hasUserInfo: true
     })
   },
+
+  // 解锁码输入
   passwdInput(e) {
     var that = this;
     console.log(e.detail.value);
@@ -56,22 +70,25 @@ Page({
       passwd: inputValue,
     })
     if(inputValue.length == 4) {
-      if(inputValue == '1234') {
-        // Save password when its the first time.
-
-        // Check password if it has already been saved before.
-
-        // enter main page
-        wx.redirectTo({
-          url: '../list/list'
+      if(that.data.firstUse) {
+        wx.setStorage({
+          key: 'oldPasswd',
+          data: inputValue
         })
-      } else {
-        wx.showToast({
-          title: '密码错误，请重试',
-          icon: 'none',
-          duration: 1500
-        })
+      } else{
+        if (inputValue != that.data.oldPasswd) {
+          wx.showToast({
+            title: '密码错误，请重试',
+            icon: 'none',
+            duration: 1500
+          })
+          that.setData({passwd: ''})
+          return
+        }
       }
+      wx.redirectTo({
+        url: '../list/list'
+      })
     }
   },
   Tap() {

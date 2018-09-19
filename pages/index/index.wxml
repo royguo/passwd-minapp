@@ -8,6 +8,10 @@
     </block>
   </view>
 
+  <view class='unlock-tip'>
+    <text wx:if="{{firstUse}}">首次使用请设置解锁密码</text>
+    <text wx:if="{{!firstUse}}">请输入解锁密码</text>
+  </view>
   <form bindsubmit="formSubmit">
     <view class='content'>
       <block wx:for="{{4}}" wx:key="item">
@@ -15,9 +19,10 @@
       </block>
       <input name="password" type='number' 
              class='ipt' 
-             maxlength="{{4}}" 
+             maxlength="{{4}}"
              focus="{{isFocus}}" 
-             bindinput="passwdInput"></input>
+             bindinput="passwdInput"
+             value='{{passwd}}'></input>
     </view> 
   </form>
 

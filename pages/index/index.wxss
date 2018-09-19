@@ -1,4 +1,8 @@
 /**index.wxss**/
+.container {
+  padding-top: 100rpx;
+}
+
 .userinfo {
   display: flex;
   flex-direction: column;
@@ -20,7 +24,7 @@
  display: flex; 
  justify-content: space-around; 
  align-items: center; 
- margin-top: 100rpx; 
+ margin-top: 30rpx; 
 } 
 
 .iptbox{ 
@@ -38,4 +42,10 @@
 .ipt{ 
  width: 0; 
  height: 0; 
+}
+
+.unlock-tip {
+  font-size: 12pt;
+  margin-top: 60rpx;
+  color: #aaa;
 }
