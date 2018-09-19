@@ -314,10 +314,13 @@ Page({
   info: function() {
     wx.showModal({
       title: '安全说明',
-      content: '本程序完全开源，除非主动备份否则不会上传任何数据到服务器端。备份数据使用 AES 加密，只有用户本人可以解密，忘记备份密码意味着数据永久丢失，源码：github.com/royguo/passwd-minapp',
+      content: '本程序完全开源(github.com/royguo/passwd-minapp)，用户主动备份到云端之前，程序会使用用户设置的备份密码进行 AES 加密，理论上只有用户本人可以解密，忘记备份密码意味着数据永久丢失。所有加密后的备份数据存储在腾讯提供的小程序云存储中。',
       showCancel: false,
       confirmText: '我明白了'
     })
+    // wx.redirectTo({
+    //   url: '../about/about',
+    // })
   },
 
   // ~~~~~~~~~~~ util methods ~~~~~~~~~~

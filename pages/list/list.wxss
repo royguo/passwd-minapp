@@ -64,13 +64,16 @@
 
 .save-btn, .cancel-btn  {
   width: 150rpx;
-  /* background-color: #1AAD19; */
-  /* color: #FFF; */
   height: 60rpx;
   line-height: 60rpx;
   margin: 20rpx 10rpx;
   font-size: 10pt;
   display: inline-block;
+}
+
+.save-btn {
+  background-color: #1AAD19;
+  color: #FFF;
 }
 
 .cancel-btn {
@@ -79,13 +82,14 @@
 
 .top-btns{
   margin: 0 40rpx 20rpx 40rpx;
+  text-align:center;
 }
 
 .top-btns button {
   width: 130rpx;
   height: 60rpx;
   line-height: 60rpx;
-  margin-right: 10rpx;
+  margin: 0 10rpx;
   font-size: 10pt;
   display: inline-block;
 }
@@ -98,6 +102,11 @@
 .list .line {
   height: 50rpx;
   background-color: #FFF;
+}
+
+.form {
+  border: 1rpx solid rgb(9,187,7);
+  margin-bottom: 20rpx;
 }
 
 .form .line {

@@ -8,7 +8,7 @@
 <modal hidden="{{hideBackupModal}}" title="备份数据到云端" 
        confirm-text="上传" cancel-text="取消"
        bindcancel="cancelBackup" bindconfirm="confirmBackup">  
-    <input bindinput='passwdInput' type='text'placeholder="请输入备份文件密码" value='{{passwd}}'/>  
+    <input bindinput='passwdInput' type='text'placeholder="请设置备份密码" value='{{passwd}}'/> 
 </modal>
 
 <modal hidden="{{hideRestoreModal}}" title="从云端恢复数据" 
