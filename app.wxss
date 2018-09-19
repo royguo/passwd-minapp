@@ -8,3 +8,8 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 } 
+
+.green-btn {
+  background-color: #1AAD19;
+  color: #FFF;
+}

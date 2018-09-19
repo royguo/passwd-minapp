@@ -1,2 +1,8 @@
 <!--pages/about/about.wxml-->
-<text>pages/about/about.wxml</text>
+<view class='info'>
+  <view class='title'>使用说明</view>
+  <view class='row'>1. 本程序完全开源，代码逻辑完全透明，源代码地址: github.com/royguo/passwd-minapp</view>
+  <view class='row'>2. 如果用户不主动点击备份按钮，所有数据只存储在手机上，如果手机损坏或者缓存被清空，所有数据将丢失</view>
+  <view class='row'>3. 当用户使用云端备份密码时，所有数据在上传之前会先进行加密（密码用户设置），上传后得数据只有用户自己可以解密，如果忘记备份密码，意味着数据无法找回</view>
+  <view class='row'>4. 建议或反馈请发邮件到 83534146@QQ.COM</view>
+</view>

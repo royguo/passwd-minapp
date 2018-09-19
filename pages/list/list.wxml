@@ -5,22 +5,22 @@
 
 <!--show.wxml-->  
 
-<modal hidden="{{hideBackupModal}}" title="备份数据到云端" 
+<modal hidden="{{hideBackupModal}}" title="备份数据到云端（加密后上传）" 
        confirm-text="上传" cancel-text="取消"
        bindcancel="cancelBackup" bindconfirm="confirmBackup">  
-    <input bindinput='passwdInput' type='text'placeholder="请设置备份密码" value='{{passwd}}'/> 
+    <input bindinput='passwdInput' type='text'placeholder="请设置备份恢复密码" value='{{passwd}}'/> 
 </modal>
 
 <modal hidden="{{hideRestoreModal}}" title="从云端恢复数据" 
        confirm-text="恢复" cancel-text="取消"
-       bindcancel="cancelRestore" bindconfirm="confirmRestore">  
-    <input bindinput='passwdInput' type='text'placeholder="请输入备份文件密码" value='{{passwd}}'/>  
+       bindcancel="cancelRestore" bindconfirm="confirmRestore"> 
+    <input bindinput='passwdInput' type='text'placeholder="请输入备份恢复密码" value='{{passwd}}'/>  
 </modal>
 
 <view class='ctn'>
 
 <view class='top-btns'>
-  <button bindtap='addNew'>添加</button>
+  <button class='green-btn' bindtap='addNew'>添加</button>
   <button bindtap='backup'>备份</button>
   <button bindtap='restore'>恢复</button>
   <button bindtap='info'>说明</button>
@@ -62,11 +62,17 @@
   </view>
   <view class='line'>
     <view class='left'>账号</view>
-    <view class='right'><text selectable='true'>{{item.key}}</text></view>
+    <view class='right'>
+      <text class='text' bindtap='copy' data-text='{{item.key}}'>{{item.key}}</text>
+      <!-- <view class='copy-btn'><image src='../../images/copy-btn.png'></image></view> -->
+    </view>
   </view>
   <view class='line'>
     <view class='left'>密码</view>
-    <view class='right'><text selectable='true'>{{item.value}}</text></view>
+    <view class='right'>
+      <text class='text' bindtap='copy' data-text='{{item.value}}'>{{item.value}}</text>
+      <!-- <view class='copy-btn'><image src='../../images/copy-btn.png'></image></view> -->
+    </view>
   </view>
   <view class='ops'>
       <button bindtap='edit' data-id='{{item.id}}'>编辑</button>

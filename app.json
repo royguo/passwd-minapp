@@ -1,9 +1,9 @@
 {
   "pages":[
-    "pages/index/index",
     "pages/list/list",
-    "pages/about/about"
+    "pages/index/index",
     
+    "pages/about/about"
   ],
   "window":{
     "backgroundTextStyle":"light",

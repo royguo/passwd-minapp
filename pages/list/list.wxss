@@ -48,6 +48,34 @@
   line-height: 1.47058824;
 }
 
+.list .line .right text {
+  max-width: 450rpx;
+  overflow: hidden;
+  display: block;
+  text-overflow: ellipsis;
+}
+
+.copy-btn {
+  font-size: 8pt;
+  width: 70rpx;
+  height: 68rpx;
+  line-height: 70rpx;
+  margin-right: -29rpx;
+  background-color: #EEE;
+  text-align: center;
+  position: absolute;
+  right: 30rpx;
+  bottom: 0rpx;
+  vertical-align: middle;
+  border-left: 1px solid #e5e5e5;
+}
+
+.copy-btn image {
+  width: 40rpx;
+  height: 40rpx;
+  margin-top: 15rpx;
+}
+
 .ops {
   text-align: right;
   padding: 10rpx 20rpx 0rpx 0;
@@ -113,8 +141,6 @@
   background-color: #FFF;
 }
 
-.qrcode-ctn{
-}
 
 .canvas {
   width: 300px;
