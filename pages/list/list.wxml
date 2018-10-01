@@ -25,6 +25,11 @@
   <button bindtap='restore'>恢复</button>
   <button bindtap='info'>说明</button>
 </view>
+
+<view class='search'>
+  <input bindinput='search' placeholder='模糊搜索'></input>
+</view>
+
 <view wx:if="{{!hideForm}}" class='item form'>
   <form bindsubmit='saveRecord'>
   <input style='display: none' name="id" value='{{record.id}}'/>
@@ -55,28 +60,30 @@
   </form>
 </view>
 
-<view wx:for="{{list}}" class='item list'>
-  <view class='line'>
-    <view class='left'>应用</view>
-    <view class='right'><text selectable='true'>{{item.app}}</text></view>
-  </view>
-  <view class='line'>
-    <view class='left'>账号</view>
-    <view class='right'>
-      <text class='text' bindtap='copy' data-text='{{item.key}}'>{{item.key}}</text>
-      <!-- <view class='copy-btn'><image src='../../images/copy-btn.png'></image></view> -->
+<view wx:for="{{list}}">
+  <view class='item list' wx:if="{{!hide[index]}}">
+    <view class='line'>
+      <view class='left'>应用</view>
+      <view class='right'><text selectable='true'>{{item.app}}</text></view>
     </view>
-  </view>
-  <view class='line'>
-    <view class='left'>密码</view>
-    <view class='right'>
-      <text class='text' bindtap='copy' data-text='{{item.value}}'>{{item.value}}</text>
-      <!-- <view class='copy-btn'><image src='../../images/copy-btn.png'></image></view> -->
+    <view class='line'>
+      <view class='left'>账号</view>
+      <view class='right'>
+        <text class='text' bindtap='copy' data-text='{{item.key}}'>{{item.key}}</text>
+      </view>
     </view>
-  </view>
-  <view class='ops'>
-      <button bindtap='edit' data-id='{{item.id}}'>编辑</button>
-      <button bindtap='remove' data-id='{{item.id}}'>删除</button>
+    <view class='line'>
+      <view class='left'>密码</view>
+      <view class='right'>
+        <text class='text' bindtap='copy' data-text='{{item.value}}'>{{item.value}}</text>
+      </view>
+    </view>
+    <view class='ops'>
+        <button bindtap='edit' data-id='{{item.id}}'>编辑</button>
+        <button bindtap='remove' data-id='{{item.id}}'>删除</button>
+    </view>
   </view>
 </view>
+
+
 </view>

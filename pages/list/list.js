@@ -7,10 +7,12 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
 
-    // user defined
     list: [
-      { id: 1, app: '示例', key: '17700000000', value: '9527@9527'}
+      { id: 1, app: '示例1', key: '17700000000', value: '9527@9527'},
+      { id: 2, app: '示例2', key: '17700000000', value: '9527@9527' },
+      { id: 3, app: '示例3', key: '17700000000', value: '9527@9527' }
     ],
+    hide: [],
     record: {id: 0, app: '', key: '', value: '' },
     focus: { key: false, value: false},
     hideBackupModal: true,
@@ -355,7 +357,27 @@ Page({
       }
     })
   },
+
+  search: function (e) {
+    const that = this
+    const word = e.detail.value
+    const fullItems = that.data.list
+    const hide = []
+    for (var i = 0; i < fullItems.length; i++) {
+      const item = fullItems[i]
+      // console.log(item)
+      if(item.app.indexOf(word) == -1
+        && item.key.indexOf(word) == -1
+        && item.value.indexOf(word) == -1) {
+        hide[i] = true
+      }
+    }
+    this.setData({hide: hide})
+    // console.log(hide)
+  },
+
   // ~~~~~~~~~~~ util methods ~~~~~~~~~~
+
   removeRecord: function (items, id) {
     var newItems = [];
     for(var i = 0; i<items.length; i++) {
