@@ -7,7 +7,6 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
 
     isFocus: true,
-    // MD5 加密后得临时设备密码
     oldPasswd: "",
     // 用户输入得解锁码
     passwd: "",
@@ -64,7 +63,7 @@ Page({
   // 解锁码输入
   passwdInput(e) {
     var that = this;
-    console.log(e.detail.value);
+    // console.log(e.detail.value);
     var inputValue = e.detail.value;
     that.setData({
       passwd: inputValue,
@@ -83,12 +82,26 @@ Page({
             duration: 1500
           })
           that.setData({passwd: ''})
+
+          // 查询是否已经输入错误一次了，如果有则清空数据，否则删除上回错误标记
+          const tried = wx.getStorageSync('wrong_password')
+          if (tried) {
+            wx.clearStorageSync()
+            wx.showToast({
+              title: '密码连续两次错误，清空数据',
+              icon: 'none',
+              duration: 1500
+            })
+          }else{
+            wx.setStorageSync('wrong_password', true)
+          }
           return
         }
       }
       wx.redirectTo({
         url: '../list/list'
       })
+      wx.removeStorageSync('wrong_password')
     }
   },
   Tap() {

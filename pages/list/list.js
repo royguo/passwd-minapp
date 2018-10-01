@@ -9,7 +9,7 @@ Page({
 
     // user defined
     list: [
-      { id: 1, app: 'app1', key: 'account1', value: 'password1'}
+      { id: 1, app: '示例', key: '17700000000', value: '9527@9527'}
     ],
     record: {id: 0, app: '', key: '', value: '' },
     focus: { key: false, value: false},
@@ -18,6 +18,23 @@ Page({
     hideForm: true,
     passwd: ''
   },
+
+  // onHide: function() {
+  //   this.setData({
+  //     needUnlock: true
+  //   })
+  // },
+
+  // onShow: function() {
+  //   if (this.data.needUnlock) {
+  //     wx.redirectTo({
+  //       url: '../index/index'
+  //     })
+  //     this.setData({
+  //       needUnlock: false
+  //     })
+  //   }
+  // },
 
   onLoad: function (options) {
     if (app.globalData.userInfo) {
