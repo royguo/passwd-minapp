@@ -21,6 +21,7 @@
 
 <view class='top-btns'>
   <button class='green-btn' bindtap='addNew'>添加</button>
+  <!-- <button bindtap='fold'>折叠</button> -->
   <button bindtap='backup'>备份</button>
   <button bindtap='restore'>恢复</button>
   <button bindtap='info'>说明</button>

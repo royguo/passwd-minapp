@@ -109,15 +109,15 @@
 }
 
 .top-btns{
-  margin: 0 40rpx 20rpx 40rpx;
+  margin: 0rpx 0rpx 20rpx 0rpx;
   text-align:center;
 }
 
 .top-btns button {
-  width: 130rpx;
+  width: 120rpx;
   height: 60rpx;
   line-height: 60rpx;
-  margin: 0 10rpx;
+  margin: 0 7rpx;
   font-size: 10pt;
   display: inline-block;
 }
