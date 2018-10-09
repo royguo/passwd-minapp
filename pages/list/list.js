@@ -18,7 +18,8 @@ Page({
     hideBackupModal: true,
     hideRestoreModal: true,
     hideForm: true,
-    passwd: ''
+    passwd: '',
+    hideLine: {}
   },
 
   // onHide: function() {
@@ -374,6 +375,17 @@ Page({
     }
     this.setData({hide: hide})
     // console.log(hide)
+  },
+
+  toggle: function(e) {
+    const idx = e.target.dataset.idx
+    console.log(idx)
+    const hideLine = this.data.hideLine
+    hideLine[idx] = !!!hideLine[idx]
+    console.log(hideLine[idx])
+    this.setData({
+      hideLine : hideLine
+    })
   },
 
   // ~~~~~~~~~~~ util methods ~~~~~~~~~~

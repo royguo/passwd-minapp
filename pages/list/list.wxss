@@ -10,7 +10,7 @@
 }
 
 .item .line {
-  padding: 10rpx 30rpx;
+  padding: 20rpx 30rpx;
   position: relative;
   display: -webkit-box;
   display: -webkit-flex;
@@ -104,27 +104,23 @@
   color: #FFF;
 }
 
-.cancel-btn {
-  /* background-color: #e64340; */
-}
-
 .top-btns{
   margin: 0rpx 0rpx 20rpx 0rpx;
   text-align:center;
 }
 
 .top-btns button {
-  width: 120rpx;
+  width: 130rpx;
   height: 60rpx;
   line-height: 60rpx;
-  margin: 0 7rpx;
+  margin: 0 20rpx;
   font-size: 10pt;
   display: inline-block;
 }
 
 .list {
-  margin-bottom: 50rpx;
-  border:1rpx solid #DDD;
+  margin-bottom: 20rpx;
+  border:1rpx solid #EEE;
 }
 
 .list .line {
@@ -149,8 +145,8 @@
 
 .search input {
   margin: 0 40rpx 20rpx 40rpx;
-  border:1rpx solid #DDD;
+  border:1rpx solid #EEE;
   background-color: #FFF;
   font-size: 10pt;
-  padding: 10rpx 30rpx;
+  padding: 20rpx 30rpx;
 }
