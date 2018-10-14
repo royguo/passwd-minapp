@@ -378,11 +378,11 @@ Page({
   },
 
   toggle: function(e) {
-    const idx = e.target.dataset.idx
-    console.log(idx)
+    const idx = e.currentTarget.dataset.idx
+    // console.log(idx)
     const hideLine = this.data.hideLine
     hideLine[idx] = !!!hideLine[idx]
-    console.log(hideLine[idx])
+    // console.log(hideLine[idx])
     this.setData({
       hideLine : hideLine
     })

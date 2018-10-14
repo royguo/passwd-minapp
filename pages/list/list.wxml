@@ -63,11 +63,19 @@
 
 <view wx:for="{{list}}" wx:key="id">
   <view class='item list' wx:if="{{!hide[index]}}">
-    <view class='line'>
+    <view class='line' bindtap='toggle' data-idx='{{index}}'>
       <view class='left'>应用</view>
       <view class='right'>
-        <text selectable='true' bindtap='toggle' data-idx='{{index}}'>{{item.app}}</text>
+        <text selectable='true'>{{item.app}}</text>
       </view>
+      <!-- 点击显示右箭头或者下箭头, hideLine[index] 表示折叠当前记录 -->
+      <view class='arrow' wx:if="{{!hideLine[index]}}" >
+        <image src='../../images/right-arrow.png' mode='aspectFit'></image>
+      </view>
+      <view class='arrow' wx:if="{{hideLine[index]}}" >
+        <image src='../../images/down-arrow.png' mode='aspectFit'></image>
+      </view>
+      <!-- 点击显示右箭头或者下箭头 end -->
     </view>
     <view class='line' wx:if="{{hideLine[index]}}">
       <view class='left'>账号</view>
