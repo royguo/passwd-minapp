@@ -11,4 +11,4 @@
 小程序码：
 
 
-![images/qr_code.jpeg]
+![](images/qr_code.jpeg)
