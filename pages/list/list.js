@@ -10,9 +10,9 @@ Page({
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
 
     list: [
-      { id: 1, app: '示例1', key: '17700000000', value: '9527@9527'},
-      { id: 2, app: '示例2', key: '17700000000', value: '9527@9527' },
-      { id: 3, app: '示例3', key: '17700000000', value: '9527@9527' }
+      // { id: 1, app: '示例1', key: '17700000000', value: '9527@9527'},
+      // { id: 2, app: '示例2', key: '17700000000', value: '9527@9527' },
+      // { id: 3, app: '示例3', key: '17700000000', value: '9527@9527' }
     ],
     hide: [],
     record: {id: 0, app: '', key: '', value: '' },
@@ -64,13 +64,18 @@ Page({
 
       // BUG FIX: 修复 id 未正确转换为整数得错误
       if (typeof versionCode == 'undefined' || versionCode <= 10) {
-        reFormatAllId(that.data.list)
-        that.saveItemsToCache(that.data.list, function (items){
-          that.setData({
-            list: items
+        if(wx.getStorageSync('fixed-bug-10')){
+          console.log('fixed')
+        }else{
+          console.log('not fixed')
+          reFormatAllId(that.data.list)
+          that.saveItemsToCache(that.data.list, function (items) {
+            that.setData({
+              list: items
+            })
+            wx.setStorageSync('fixed-bug-10', true)
           })
-          // console.log(items)
-        })
+        }
       }
     })
 
