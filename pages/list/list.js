@@ -1,5 +1,7 @@
 const CryptoJS = require('../../utils/crypto-js.min.js')
 const app = getApp()
+const LocalItemsCacheKey = 'cachedList'
+const versionCode = 10
 
 Page({
   data: {
@@ -22,24 +24,9 @@ Page({
     hideLine: {}
   },
 
-  // onHide: function() {
-  //   this.setData({
-  //     needUnlock: true
-  //   })
-  // },
-
-  // onShow: function() {
-  //   if (this.data.needUnlock) {
-  //     wx.redirectTo({
-  //       url: '../index/index'
-  //     })
-  //     this.setData({
-  //       needUnlock: false
-  //     })
-  //   }
-  // },
-
   onLoad: function (options) {
+    var that = this
+
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -70,16 +57,26 @@ Page({
     wx.cloud.init()
 
     // 初始化列表
-    var that = this
-    list: wx.getStorage({
-      key: 'cachedList',
-      success: function (res) { 
-        that.setData({
-          list: res.data
+    that.getItemsFromCache(function(items){
+      that.setData({
+        list: items
+      })
+
+      // BUG FIX: 修复 id 未正确转换为整数得错误
+      if (typeof versionCode == 'undefined' || versionCode <= 10) {
+        reFormatAllId(that.data.list)
+        that.saveItemsToCache(that.data.list, function (items){
+          that.setData({
+            list: items
+          })
+          // console.log(items)
         })
-      },
+      }
     })
+
+    
   },
+
   getUserInfo: function (e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
@@ -90,8 +87,8 @@ Page({
   },
 
   saveRecord: function(e) {
-    console.log(e)
     var that = this
+
     var newRecord = e.detail.value
     if(newRecord.app == '') {
       wx.showToast({
@@ -117,22 +114,15 @@ Page({
       newRecord.id = newId;
     }
 
-    const newList = updateOrAddNewRecord(that.data.list, newRecord)
-    that.setData({
-      record : {id: 0, app: '', key: '', value: ''},
-      list: newList
-    })
-    wx.setStorage({
-      key: 'cachedList',
-      data: newList,
-      success: function(){
-        wx.showToast({
-          title: '保存成功'
-        })
-        that.setData({
-          hideForm: true
-        })
-      }
+    that.updateOrAddNewItem(that.data.list, newRecord, function(newItems){
+      wx.showToast({
+        title: '保存成功'
+      })
+      that.setData({
+        record: { id: 0, app: '', key: '', value: '' },
+        list: newItems,
+        hideForm: true
+      })
     })
   },
 
@@ -146,13 +136,9 @@ Page({
         if (sm.confirm) {
           // 用户点击了确定 可以调用删除方法了
           const id = e.target.dataset.id
-          const newList = that.removeRecord(that.data.list, id)
+          const newItems = that.removeItemById(that.data.list, id)
           that.setData({
-            list: newList
-          })
-          wx.setStorage({
-            key: 'cachedList',
-            data: newList
+            list: newItems
           })
         } else if (sm.cancel) {
           console.log('用户点击取消')
@@ -316,8 +302,10 @@ Page({
                   })
                 }else{
                   // console.log(JSON.parse(restored))
+                  var items = JSON.parse(restored)
+                  that.saveItemsToCache(items)
                   that.setData({
-                    list: JSON.parse(restored)
+                    list: items
                   })
                   wx.showToast({
                     title: '恢复成功'
@@ -378,11 +366,9 @@ Page({
   },
 
   toggle: function(e) {
-    const idx = e.currentTarget.dataset.idx
-    // console.log(idx)
+    const id = e.currentTarget.dataset.id
     const hideLine = this.data.hideLine
-    hideLine[idx] = !!!hideLine[idx]
-    // console.log(hideLine[idx])
+    hideLine[id] = !!!hideLine[id]
     this.setData({
       hideLine : hideLine
     })
@@ -390,54 +376,93 @@ Page({
 
   // ~~~~~~~~~~~ util methods ~~~~~~~~~~
 
-  removeRecord: function (items, id) {
+  removeItemById: function (items, id) {
     var newItems = [];
     for(var i = 0; i<items.length; i++) {
       if (items[i].id != id) {
         newItems.push(items[i])
       }
     }
+    // 删除后缓存数据到本地
+    this.saveItemsToCache(newItems)
     return newItems;
   },
 
+  // 加密字符串
   encrypt: function(str, passwd) {
     var cipherText = CryptoJS.AES.encrypt(str, passwd).toString();
     return cipherText
   },
 
+  // 解密字符串
   decrypt: function(str, passwd) {
     var bytes = CryptoJS.AES.decrypt(str, passwd);
     var originalText = bytes.toString(CryptoJS.enc.Utf8);
     return originalText
+  },
+
+  // 全局统一：从本地缓存读取列表
+  getItemsFromCache: function (success) {
+    var that = this
+    wx.getStorage({
+      key: LocalItemsCacheKey,
+      success: function (res) {
+        // 对取出来得数据，按照应用名称字典序重新排列
+
+        res.data.sort(function(a, b){
+          if (a.app.toUpperCase() > b.app.toUpperCase()) return 1
+          if (a.app.toUpperCase() < b.app.toUpperCase()) return -1
+          return 0
+        })
+        // console.log(res.data)
+        if (!!success) success(res.data)
+      }
+    })
+  },
+
+  // 全局统一：将最新列表存储到本地缓存
+  saveItemsToCache: function (items, success) {
+    // var that = this
+    wx.setStorage({
+      key: LocalItemsCacheKey,
+      data: items,
+      success: function(){
+        if (!!success) success(items)
+      }
+    })
+  },
+
+  // 更新一条记录，如果没有则在末尾新增
+  updateOrAddNewItem: function (items, newItem, success) {
+    var newItems = [];
+    var updated = false;
+    for(var i = 0; i<items.length; i++) {
+      if (items[i].id != newItem.id) {
+        newItems.push(items[i])
+      } else {
+        newItems.push(newItem)
+        updated = true
+      }
+    }
+    if (!updated) {
+      newItems.push(newItem)
+    }
+    // 更新或新增后，先缓存到本地
+    this.saveItemsToCache(newItems, success)
+    return newItems;
   }
+  
 })
 
+// static methods
 function getLastId(items) {
-  var id = 0;
-  // console.log(items)
+  var maxId = 0;
   for(var i =0; i < items.length; i++) {
-    if(id < items[i].id) {
-      id = items[i].id;
+    if (maxId < items[i].id) {
+      maxId = items[i].id;
     }
   }
-  return id + 1;
-}
-
-function updateOrAddNewRecord(items, newRecord) {
-  var newItems = [];
-  var updated = false;
-  for(var i = 0; i < items.length; i++) {
-    if(items[i].id != newRecord.id) {
-      newItems.push(items[i])
-    }else{
-      newItems.push(newRecord)
-      updated = true
-    }
-  }
-  if(!updated) {
-    newItems.push(newRecord)
-  }
-  return newItems;
+  return parseInt(maxId) + 1;
 }
 
 function getRecordById(items, id) {
@@ -450,4 +475,10 @@ function getRecordById(items, id) {
     } 
   }
   return {};
+}
+
+function reFormatAllId(items) {
+  for (var i = 0; i < items.length; i++) {
+    items[i].id = (i + 1)
+  }
 }

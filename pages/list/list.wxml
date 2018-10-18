@@ -62,39 +62,39 @@
 </view>
 
 <view wx:for="{{list}}" wx:key="id">
+  <!-- hide[index] 表示搜索的时候是否展示 -->
   <view class='item list' wx:if="{{!hide[index]}}">
-    <view class='line' bindtap='toggle' data-idx='{{index}}'>
+    <view class='line' bindtap='toggle' data-id='{{item.id}}'>
       <view class='left'>应用</view>
       <view class='right'>
         <text selectable='true'>{{item.app}}</text>
       </view>
-      <!-- 点击显示右箭头或者下箭头, hideLine[index] 表示折叠当前记录 -->
-      <view class='arrow' wx:if="{{!hideLine[index]}}" >
+      <!-- 点击显示右箭头或者下箭头, hideLine[item.id] 表示折叠当前记录 -->
+      <view class='arrow' wx:if="{{!hideLine[item.id]}}" >
         <image src='../../images/right-arrow.png' mode='aspectFit'></image>
       </view>
-      <view class='arrow' wx:if="{{hideLine[index]}}" >
+      <view class='arrow' wx:if="{{hideLine[item.id]}}" >
         <image src='../../images/down-arrow.png' mode='aspectFit'></image>
       </view>
       <!-- 点击显示右箭头或者下箭头 end -->
     </view>
-    <view class='line' wx:if="{{hideLine[index]}}">
+    <view class='line' wx:if="{{hideLine[item.id]}}">
       <view class='left'>账号</view>
       <view class='right'>
         <text class='text' bindtap='copy' data-text='{{item.key}}'>{{item.key}}</text>
       </view>
     </view>
-    <view class='line' wx:if="{{hideLine[index]}}">
+    <view class='line' wx:if="{{hideLine[item.id]}}">
       <view class='left'>密码</view>
       <view class='right'>
         <text class='text' bindtap='copy' data-text='{{item.value}}'>{{item.value}}</text>
       </view>
     </view>
-    <view class='ops' wx:if="{{hideLine[index]}}">
+    <view class='ops' wx:if="{{hideLine[item.id]}}">
         <button bindtap='edit' data-id='{{item.id}}'>编辑</button>
         <button bindtap='remove' data-id='{{item.id}}'>删除</button>
     </view>
   </view>
 </view>
-
 
 </view>
