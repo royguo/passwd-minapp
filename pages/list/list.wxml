@@ -91,6 +91,7 @@
       </view>
     </view>
     <view class='ops' wx:if="{{hideLine[item.id]}}">
+    <button bindtap='copy' data-text='{{item.key}}\r\n{{item.value}}'>复制</button>
         <button bindtap='edit' data-id='{{item.id}}'>编辑</button>
         <button bindtap='remove' data-id='{{item.id}}'>删除</button>
     </view>
